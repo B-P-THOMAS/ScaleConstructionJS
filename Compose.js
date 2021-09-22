@@ -1,5 +1,5 @@
 var startTime = -1;
-var animationLength = 1000; // Animation length in milliseconds
+var animationLength = 500; // Animation length in milliseconds
 
 let ctx = document.getElementById('canvas').getContext('2d');
 let bezel = new Bezel(ctx);

@@ -6,6 +6,7 @@ class CShape {
 
     addAngle(angle) {
         this.angle += angle;
+        this.angle = this.angle % (2 * Math.PI);
     }
 
     render(ctx, time) {
@@ -24,7 +25,7 @@ class CShape {
         ctx.translate(this.radius, 0);
 
         ctx.beginPath();
-        ctx.moveTo(15 - this.radius, 0);
+        ctx.moveTo(10 - this.radius, 0);
         ctx.lineTo(0, 0);
         ctx.stroke();
 

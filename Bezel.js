@@ -12,7 +12,7 @@ class Bezel {
         ctx.translate(w / 2, h / 2);
     
         ctx.beginPath();
-        ctx.lineWidth = 10;
+        ctx.lineWidth = 5;
         ctx.strokeStyle = '#325FA2';
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2, true);
         ctx.stroke();
