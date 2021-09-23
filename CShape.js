@@ -31,8 +31,8 @@ class CShape {
 
         ctx.beginPath();
         ctx.arc(0, 0, 10, 0, Math.PI * 2, true);
-        ctx.stroke();
         ctx.fill();
+        ctx.stroke();
 
         ctx.restore();
     }
