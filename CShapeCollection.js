@@ -18,7 +18,7 @@ class CShapeCollection {
         let angle = -Math.PI / 2;
         do {
             this.angles.push(angle);
-            this.blobcolors.push('#ff0000');
+            this.blobcolors.push('#ffffff');
             this.piesegmentcolors.push('#808080');
             angle += steps[idx] * (Math.PI / 6);
         } while (++idx < steps.length)
@@ -32,8 +32,16 @@ class CShapeCollection {
         //
         this.angles[this.selector] -= (deltatime * Math.PI / 6);
 
-        // update the colours we'll use to shade items in the layour
+        // update the colours we'll use to shade items in the layout
         //
+        this.blobcolors[this.selector] = `rgb(${Math.floor(255 * time)},${Math.floor(255 * time)},255)`;
+
+        this.piesegmentcolors[this.selector] = `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
+        let nextselector = this.selector - 1;
+        if (nextselector < 0) {
+            nextselector = this.piesegmentcolors.length - 1;
+        }
+        this.piesegmentcolors[nextselector] = `rgb(255,${Math.floor(255 - (255 * time))},${Math.floor(255 - (255 * time))})`;
     }
 
     renderSpokesAndBlobs(ctx) {

@@ -27,7 +27,7 @@ function doAnimation(timestamp) {
     // time is in the range [0.0, 1.0]
     //
     let time = progress / animationLength;
-    time = easeOutExpo(time);
+    time = easeInOutCubic(time);
 
     // Do animation ...
     let w = ctx.canvas.width;
