@@ -32,11 +32,13 @@ function doAnimation(timestamp) {
     // Do animation ...
     let w = ctx.canvas.width;
     let h = ctx.canvas.height;
+    shapes.update(time);
 
     ctx.save();
     ctx.clearRect(0, 0, w, h);
+    shapes.renderPieWedges(ctx);
     bezel.render(ctx);
-    shapes.render(ctx, time);
+    shapes.renderSpokesAndBlobs(ctx);
     ctx.restore();
 
     requestAnimationFrame(doAnimation);

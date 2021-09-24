@@ -7,8 +7,10 @@ class CShapeCollection {
         //        *  T  T  S  T  T  T  S
         let steps = [2, 2, 1, 2, 2, 2, 1];
 
-        this.selector = 6;
         this.angles = [];
+        this.blobcolors = [];
+        this.piesegmentcolors = [];
+        this.selector = 6;
         this.lasttime = 0;
         this.radius = radius;
 
@@ -16,31 +18,41 @@ class CShapeCollection {
         let angle = -Math.PI / 2;
         do {
             this.angles.push(angle);
+            this.blobcolors.push('#ff0000');
+            this.piesegmentcolors.push('#808080');
             angle += steps[idx] * (Math.PI / 6);
         } while (++idx < steps.length)
     }
 
-    render(ctx, time) {
+    update(time) {
         let deltatime = time - this.lasttime;
         this.lasttime = time;
 
+        // update the angles array.
+        //
         this.angles[this.selector] -= (deltatime * Math.PI / 6);
 
+        // update the colours we'll use to shade items in the layour
+        //
+    }
+
+    renderSpokesAndBlobs(ctx) {
         for (let idx = 0; idx < this.angles.length; ++idx) {
-            this.renderSpokeAndBlob(ctx, this.angles[idx]);
+            this.renderSpokeAndBlob(ctx, idx);
         }
     }
 
-    renderSpokeAndBlob(ctx, angle) {
-
+    renderSpokeAndBlob(ctx, idx) {
         let width = ctx.canvas.width;
         let height = ctx.canvas.height;
+
+        let angle = this.angles[idx];
 
         ctx.save();
 
         ctx.lineWidth = 5;
         ctx.strokeStyle = '#325FA2';
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = this.blobcolors[idx];
 
         ctx.translate(width / 2, height / 2);
         ctx.rotate(angle);
@@ -58,6 +70,29 @@ class CShapeCollection {
 
         ctx.restore();
     }
+
+    renderPieWedges(ctx) {
+        for (let idxstart = 0; idxstart < this.angles.length; ++idxstart) {
+            let idxend = idxstart + 1;
+            if (idxend == this.angles.length) {
+                idxend = 0;
+            }
+
+            let width = ctx.canvas.width;
+            let height = ctx.canvas.height;
+
+            ctx.save();
+            ctx.fillStyle = this.piesegmentcolors[idxstart];
+            ctx.translate(width / 2, height / 2);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            //ctx.arc(x,y,radius,startAngle,endAngle, anticlockwise); 
+            ctx.arc(0, 0, this.radius, this.angles[idxstart], this.angles[idxend], false); // outer (filled)
+            ctx.fill();
+            ctx.restore();
+        }
+    }
+
 
     advanceScene() {
         this.selector += 3;
