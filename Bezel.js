@@ -1,6 +1,8 @@
 class Bezel {
     constructor(ctx) {
         this.radius = ctx.canvas.width / 2.5
+        this.angle = -Math.PI /2;
+        this.lasttime = 0;
     }
 
     render(ctx) {
@@ -23,6 +25,30 @@ class Bezel {
         ctx.fill();
         ctx.stroke();
 
+        // Blob indicates root of new scale.
+        //
+        ctx.rotate(this.angle);
+        ctx.translate(this.radius, 0);
+        ctx.fillStyle = '#ff0000';
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 18, 0, Math.PI * 2, true);
+        ctx.fill();
+
         ctx.restore();
+    }
+
+    update(time) {
+        let deltatime = time - this.lasttime;
+        this.lasttime = time;
+        this.angle += (deltatime * 5 * Math.PI /6);
+        if (this.angle > 2 * Math.PI)
+        {
+            this.angle -= (2 * Math.PI);
+        }
+    }
+
+    advanceScene() {
+        this.lasttime = 0;
     }
 }

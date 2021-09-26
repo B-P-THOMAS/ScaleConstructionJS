@@ -33,6 +33,7 @@ function doAnimation(timestamp) {
     let w = ctx.canvas.width;
     let h = ctx.canvas.height;
     shapes.update(time);
+    bezel.update(time);
 
     ctx.save();
     ctx.clearRect(0, 0, w, h);
@@ -46,6 +47,7 @@ function doAnimation(timestamp) {
     if (progress > animationLength) {
         startTime = timestamp;
         shapes.advanceScene();
+        bezel.advanceScene();
     }
 }
 
