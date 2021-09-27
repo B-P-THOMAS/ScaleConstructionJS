@@ -35,6 +35,7 @@ class CShapeCollection {
         // update the angles array.
         //
         this.angles[this.selector] -= (deltatime * Math.PI / 6);
+        this.angles[this.selector] %= (Math.PI * 2);
 
         // update the colours we'll use to shade items in the layout
         //

@@ -44,7 +44,7 @@ class Bezel {
         this.angle += (deltatime * 5 * Math.PI /6);
         if (this.angle > 2 * Math.PI)
         {
-            this.angle -= (2 * Math.PI);
+            this.angle %= (2 * Math.PI);
         }
     }
 

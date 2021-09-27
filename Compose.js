@@ -1,5 +1,5 @@
 var startTime = -1;
-var animationLength = 1000; // Animation length in milliseconds
+var animationLength = 2000; // Animation length in milliseconds
 
 let ctx = document.getElementById('canvas').getContext('2d');
 let bezel = new Bezel(ctx);
@@ -27,7 +27,8 @@ function doAnimation(timestamp) {
     // time is in the range [0.0, 1.0]
     //
     let time = progress / animationLength;
-    time = easeInOutCubic(time);
+    time = Math.min(1, time);
+    time = easeOutExpo(time);
 
     // Do animation ...
     let w = ctx.canvas.width;
