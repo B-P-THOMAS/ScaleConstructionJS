@@ -5,76 +5,57 @@
     <script src='Bezel.js' defer></script>
     <script src='CShapeCollection.js' defer></script>
     <script src='Compose.js' defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div style="text-align: center;">
         <div>
-            <canvas id="canvas" width="500" height="500" style="border:2px solid #000000;">
+            <canvas class="canvas" id="canvas" width="500" height="500">
                 Your browser does not support the HTML canvas tag.
             </canvas>
         </div>
         <div>
-        <!-- <input type="button" id='backward_continuous' value="&#x23EA;" />
-        <input type="button" id='backward_1' value="" />
-        <input type="button" id='stop' value="&#x23F9;" />
-        <input type="button" id='forward_1' value="▶️" />
-        <input type="button" id='forward_continuous' value="&#x23E9;" /> -->
-        <!-- <button> -->
-        <!-- From https://material.io/tools/icons/?style=baseline -->
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path
-                    d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z" />
-                <path fill="none" d="M0 0h24v24H0z" />
-            </svg>
-        </button> -->
-        <!-- <button id="search-button">
-            <svg id="search-icon" class="search-icon" viewBox="0 0 24 24" width="40">
-                <path
-                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                <path d="M0 0h24v24H0z" fill="none" />
-            </svg>
-        </button> -->
-        <button width="100">
-            <svg viewbox="0 0 100 100" width="60">
-                <!-- The arrow shape is simple enough that the path is hand coded -->
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="translate(20 50)" />
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="translate(50 50)" />
-            </svg>
-        </button>
-        <button>
-            <svg viewbox="0 0 100 100" width="60">
-                <!-- The arrow shape is simple enough that the path is hand coded -->
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="translate(30 50)" />
-            </svg>
-        </button>
-        <button>
-            <svg viewbox="0 0 100 100" width="60">
-                <!-- The arrow shape is simple enough that the path is hand coded -->
-                <path class="square" d="M 30,30 l -60,0 l 0,-60 l 60,0 Z" transform="translate(50 50)" />
-            </svg>
-        </button>
-        <button>
-            <svg viewbox="0 0 100 100" width="60">
-                <!-- The arrow shape is simple enough that the path is hand coded -->
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="rotate(180) translate(-70 -50)" />
-            </svg>
-        </button>
-        <button>
-            <svg viewbox="0 0 100 100" width="60">
-                <!-- The arrow shape is simple enough that the path is hand coded -->
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="rotate(180) translate(-50 -50)" />
-                <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
-                    transform="rotate(180) translate(-80 -50)" />
-            </svg>
-        </button>
+            <button class="btn first" id="backward_continuous">
+                <svg viewbox="0 0 100 100" width="60">
+                    <!-- [ << ]  -->
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="translate(20 50)" />
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="translate(50 50)" />
+                </svg>
+            </button>
+            <button class="btn first"id="backward_once">
+                <svg viewbox="0 0 100 100" width="60">
+                    <!-- [ < ]  -->
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="translate(30 50)" />
+                </svg>
+            </button>
+            <button class="btn first"id="stop">
+                <svg viewbox="0 0 100 100" width="60">
+                    <!--  [ ■ ]   -->
+                    <path class="square" d="M 30,30 l -60,0 l 0,-60 l 60,0 Z" transform="translate(50 50)" />
+                </svg>
+            </button>
+            <button class="btn first"id="forward_once">
+                <svg viewbox="0 0 100 100" width="60">
+                    <!--  [ > ]  -->
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="rotate(180) translate(-70 -50)" />
+                </svg>
+            </button>
+            <button class="btn first"id="forward_continuous">
+                <svg viewbox="0 0 100 100" width="60">
+                    <!--  [ >> ]  -->
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="rotate(180) translate(-50 -50)" />
+                    <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
+                        transform="rotate(180) translate(-80 -50)" />
+                </svg>
+            </button>
 
-    </div>
+        </div>
 </body>
 
 </html>

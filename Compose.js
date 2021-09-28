@@ -52,5 +52,38 @@ function doAnimation(timestamp) {
     }
 }
 
+function clickBackwardContinuous() {
+    console.dir("clickBackwardContinuous");
+}
+
+function clickBackwardOnce() {
+    console.dir("clickBackwardOnce");
+}
+
+function clickStop() {
+    console.dir("clickStop");
+}
+
+function clickForwardOnce() {
+    console.dir("clickForwardOnce");
+}
+
+function clickForwardContinuous() {
+    console.dir("clickForwardContinuous");
+}
+
+function setup() {
+    document.getElementById("backward_continuous").addEventListener("click", clickBackwardContinuous);
+    document.getElementById("backward_once").addEventListener("click", clickBackwardOnce);
+    document.getElementById("stop").addEventListener("click", clickStop);
+    document.getElementById("forward_once").addEventListener("click", clickForwardOnce);
+    document.getElementById("forward_continuous").addEventListener("click", clickForwardContinuous);
+}
+
+// ####################################
+//
+setup();
+
 // Start animation
+//
 requestAnimationFrame(doAnimation);
