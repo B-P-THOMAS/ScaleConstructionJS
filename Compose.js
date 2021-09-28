@@ -1,6 +1,4 @@
 class Compose {
-
-
     // Thanks to https://easings.net/
     //
     easeInOutCubic(x) {
@@ -15,11 +13,12 @@ class Compose {
         // Calculate animation progress
         var progress = 0;
 
-        if (this.startTime < 0) {
+        if (this.stopped || this.startTime < 0) {
             this.startTime = timestamp;
         } else {
             progress = timestamp - this.startTime;
         }
+
         // time is in the range [0.0, 1.0]
         //
         let time = progress / this.animationLength;
@@ -39,13 +38,16 @@ class Compose {
         this.shapes.renderSpokesAndBlobs(this.ctx);
         this.ctx.restore();
 
-        requestAnimationFrame(this.doAnimation.bind(this));
-
         if (progress > this.animationLength) {
             this.startTime = timestamp;
             this.shapes.advanceScene();
             this.bezel.advanceScene();
+            if (this.stopping) {
+                this.stopped = true;
+            }
         }
+
+        requestAnimationFrame(this.doAnimation.bind(this));
     }
 
     clickBackwardContinuous() {
@@ -58,17 +60,24 @@ class Compose {
 
     clickStop() {
         console.dir("clickStop");
+        compose.stopping = true;
     }
 
     clickForwardOnce() {
         console.dir("clickForwardOnce");
+        compose.stopped = false;
+        compose.stopping = true;
     }
 
     clickForwardContinuous() {
         console.dir("clickForwardContinuous");
+        compose.stopped = false;
+        compose.stopping = false;
     }
 
     constructor() {
+        this.stopped = true;
+        this.stopping = false;
         this.startTime = -1;
         this.animationLength = 2000; // Animation length in milliseconds
 
