@@ -28,8 +28,8 @@ class Compose {
         // Do animation ...
         let w = this.ctx.canvas.width;
         let h = this.ctx.canvas.height;
-        this.shapes.update(time);
-        this.bezel.update(time);
+        this.shapes.update(time, this.direction);
+        this.bezel.update(time, this.direction);
 
         this.ctx.save();
         this.ctx.clearRect(0, 0, w, h);
@@ -52,10 +52,16 @@ class Compose {
 
     clickBackwardContinuous() {
         console.dir("clickBackwardContinuous");
+        compose.stopped = false;
+        compose.stopping = false;
+        compose.direction = -1;
     }
 
     clickBackwardOnce() {
         console.dir("clickBackwardOnce");
+        compose.stopped = false;
+        compose.stopping = true;
+        compose.direction = -1;
     }
 
     clickStop() {
@@ -67,12 +73,14 @@ class Compose {
         console.dir("clickForwardOnce");
         compose.stopped = false;
         compose.stopping = true;
+        compose.direction = +1;
     }
 
     clickForwardContinuous() {
         console.dir("clickForwardContinuous");
         compose.stopped = false;
         compose.stopping = false;
+        compose.direction = +1;
     }
 
     constructor() {
@@ -80,10 +88,11 @@ class Compose {
         this.stopping = false;
         this.startTime = -1;
         this.animationLength = 2000; // Animation length in milliseconds
+        this.direction = -1; // +1 clockwise, -1 counterclockwise
 
         this.ctx = document.getElementById('canvas').getContext('2d');
-        this.bezel = new Bezel(this.ctx);
-        this.shapes = new CShapeCollection(this.ctx, this.bezel.radius);
+        this.bezel = new Bezel(this.ctx, this.direction);
+        this.shapes = new CShapeCollection(this.ctx, this.bezel.radius, this.direction);
 
         document.getElementById("backward_continuous").addEventListener("click", this.clickBackwardContinuous);
         document.getElementById("backward_once").addEventListener("click", this.clickBackwardOnce);

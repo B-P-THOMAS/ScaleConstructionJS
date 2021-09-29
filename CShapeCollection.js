@@ -1,6 +1,6 @@
 class CShapeCollection {
 
-    constructor(ctx, radius) {
+    constructor(ctx, radius, direction) {
 
         // The numbers in the steps array represent the intervals in a 
         // one-octave major scale:        
@@ -10,22 +10,30 @@ class CShapeCollection {
         this.angles = [];
         this.blobcolors = [];
         this.piesegmentcolors = [];
-        this.selector = 6;
+        this.direction = direction; // +1 for clockwise, -1 for counterclockwise
+        this.selector = (this.direction > 0) ? 6 : 3;
         this.lasttime = 0;
         this.radius = radius;
 
         let idx = 0;
         let angle = -Math.PI / 2;
         do {
-            let piesegmentcolor = '#ff0000'
+            let piesegmentcolor = 'rgb(255,0,0)'
             this.angles.push(angle);
-            this.blobcolors.push('#ffffff');
+            this.blobcolors.push('rgb(255,255,255)');
             if (steps[idx] == 2) {
-                piesegmentcolor = '#ffffff';
+                piesegmentcolor = 'rgb(255,255,255)';
             }
             this.piesegmentcolors.push(piesegmentcolor);
             angle += steps[idx] * (Math.PI / 6);
         } while (++idx < steps.length)
+    }
+
+    piesegmentcolor(time) {
+        if (this.direction < 0) {
+            time = 1 - time;
+        }
+        return `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
     }
 
     update(time) {
@@ -34,19 +42,20 @@ class CShapeCollection {
 
         // update the angles array.
         //
-        this.angles[this.selector] -= (deltatime * Math.PI / 6);
+        this.angles[this.selector] -= (this.direction * deltatime * Math.PI / 6);
         this.angles[this.selector] %= (Math.PI * 2);
 
         // update the colours we'll use to shade items in the layout
         //
         // this.blobcolors[this.selector] = `rgb(${Math.floor(255 * time)},${Math.floor(255 * time)},0)`;
 
-        this.piesegmentcolors[this.selector] = `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
+        this.piesegmentcolors[this.selector] = this.piesegmentcolor(time);
         let nextselector = this.selector - 1;
         if (nextselector < 0) {
             nextselector = this.piesegmentcolors.length - 1;
         }
-        this.piesegmentcolors[nextselector] = `rgb(255,${Math.floor(255 - (255 * time))},${Math.floor(255 - (255 * time))})`;
+        nextselector = nextselector % this.piesegmentcolors.length;
+        this.piesegmentcolors[nextselector] = this.piesegmentcolor(1 - time);
     }
 
     renderSpokesAndBlobs(ctx) {
@@ -106,9 +115,11 @@ class CShapeCollection {
         }
     }
 
-
     advanceScene() {
-        this.selector += 3;
+        this.selector += 3 * this.direction;
+        if (this.selector < 0) {
+            this.selector += this.angles.length;
+        }
         this.lasttime = 0;
         this.selector = this.selector % this.angles.length;
         if (this.selector >= this.angles.length) {

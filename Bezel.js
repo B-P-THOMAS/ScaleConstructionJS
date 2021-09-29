@@ -1,8 +1,9 @@
 class Bezel {
-    constructor(ctx) {
+    constructor(ctx, direction) {
         this.radius = ctx.canvas.width / 2.5
-        this.angle = -Math.PI /2;
+        this.angle = -Math.PI / 2;
         this.lasttime = 0;
+        this.direction = direction; // +1 clockwise, -1 counterclockwise
     }
 
     render(ctx) {
@@ -41,9 +42,13 @@ class Bezel {
     update(time) {
         let deltatime = time - this.lasttime;
         this.lasttime = time;
-        this.angle += (deltatime * 5 * Math.PI /6);
-        if (this.angle > 2 * Math.PI)
-        {
+        this.angle += (this.direction * deltatime * 5 * Math.PI / 6);
+        
+        if (this.angle < 0) {
+            this.angle += Math.PI * 2;
+        }
+
+        if (this.angle > 2 * Math.PI) {
             this.angle %= (2 * Math.PI);
         }
     }
