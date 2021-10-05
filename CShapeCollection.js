@@ -113,7 +113,6 @@ class CShapeCollection {
             ctx.translate(width / 2, height / 2);
             ctx.beginPath();
             ctx.moveTo(0, 0);
-            //ctx.arc(x,y,radius,startAngle,endAngle, anticlockwise); 
             ctx.arc(0, 0, this.radius, this.angles[idxstart], this.angles[idxend], false); // outer (filled)
             ctx.fill();
             ctx.restore();

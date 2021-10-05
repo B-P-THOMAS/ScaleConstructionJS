@@ -23,9 +23,6 @@ class Compose {
                 if (action.stopped != undefined) {
                     this.stopped = action.stopped;
                 }
-                // if (action.stopping != undefined) {
-                //     this.stopping = action.stopping;
-                // }
                 if (action.continuous != undefined) {
                     this.stopping = !action.continuous;
                 }
@@ -39,13 +36,6 @@ class Compose {
         // time is in the range [0.0, 1.0]
         //
         let time = progress / this.animationLength;
-        // let direction = 0;
-
-        // if (this.starting) {
-        //     this.starting = false;
-        //     direction = this.direction;
-        //     time = 0;
-        // }
 
         time = Math.min(1, time);
         time = this.easeOutExpo(time);
@@ -80,7 +70,6 @@ class Compose {
         let action = {
             command: 1,
             stopped: false,
-            // stopping: false,
             direction: -1,
             continuous: true,
         }
@@ -93,6 +82,10 @@ class Compose {
             }
         }
         compose.actions.push(action);
+
+        if (compose.direction != action.direction) {
+            compose.stopping = true;
+        }
     }
 
     clickBackwardOnce() {
@@ -100,20 +93,17 @@ class Compose {
         let action = {
             command: 2,
             stopped: false,
-            // stopping: true,
             direction: -1,
             continuous: false,
         }
+        compose.stopping = true;
         compose.actions.push(action);
     }
 
     clickStop() {
         console.dir("clickStop");
-        // let action = {
-        //     // stopping: true
-        //     continuous: false,
-        // }
-        // compose.actions.push(action);
+        // This action is instantaneous not queued.
+        //
         compose.stopping = true;
     }
 
@@ -122,10 +112,10 @@ class Compose {
         let action = {
             command: 3,
             stopped: false,
-            // stopping: true,
             direction: +1,
             continuous: false,
         }
+        compose.stopping = true;
         compose.actions.push(action);
     }
 
@@ -138,6 +128,7 @@ class Compose {
             direction: +1,
             continuous: true,
         }
+
         // If there's already a continuous action in the queue don't add a duplicate.
         //
         if (compose.actions.length > 0) {
@@ -147,11 +138,14 @@ class Compose {
             }
         }
         compose.actions.push(action);
+
+        if (compose.direction != action.direction) {
+            compose.stopping = true;
+        }
     }
 
     constructor() {
-        this.actions = [];
-        this.starting = false;
+        this.actions = []; // queue the button clicks
         this.stopped = true;
         this.stopping = false;
         this.startTime = -1;
@@ -171,10 +165,6 @@ class Compose {
         requestAnimationFrame(this.doAnimation.bind(this));
     }
 }
-
-// ####################################
-//
-
 
 // Start animation
 //
