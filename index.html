@@ -15,7 +15,7 @@
                 Your browser does not support the HTML canvas tag.
             </canvas>
         </div>
-        <div>
+        <div class="buttoncontainer">
             <button class="btn first" id="backward_continuous">
                 <svg viewbox="0 0 100 100" width="60">
                     <!-- [ << ]  -->
@@ -25,27 +25,27 @@
                         transform="translate(50 50)" />
                 </svg>
             </button>
-            <button class="btn first"id="backward_once">
+            <button class="btn first" id="backward_once">
                 <svg viewbox="0 0 100 100" width="60">
                     <!-- [ < ]  -->
                     <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
                         transform="translate(30 50)" />
                 </svg>
             </button>
-            <button class="btn first"id="stop">
+            <button class="btn first" id="stop">
                 <svg viewbox="0 0 100 100" width="60">
                     <!--  [ ■ ]   -->
                     <path class="square" d="M 30,30 l -60,0 l 0,-60 l 60,0 Z" transform="translate(50 50)" />
                 </svg>
             </button>
-            <button class="btn first"id="forward_once">
+            <button class="btn first" id="forward_once">
                 <svg viewbox="0 0 100 100" width="60">
                     <!--  [ > ]  -->
                     <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
                         transform="rotate(180) translate(-70 -50)" />
                 </svg>
             </button>
-            <button class="btn first"id="forward_continuous">
+            <button class="btn first" id="forward_continuous">
                 <svg viewbox="0 0 100 100" width="60">
                     <!--  [ >> ]  -->
                     <path class="arrow" d="M 0,0 l 40,40 l -10,10 l -50,-50 l 50,-50 l 10,10 Z"
@@ -55,6 +55,9 @@
                 </svg>
             </button>
 
+        </div>
+        <div class="slidercontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="speed_slider" />
         </div>
 </body>
 

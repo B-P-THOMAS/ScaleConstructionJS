@@ -28,8 +28,7 @@ class Compose {
                 }
 
             }
-        }
-        else {
+        } else {
             progress = timestamp - this.startTime;
         }
 
@@ -68,13 +67,13 @@ class Compose {
     clickBackwardContinuous() {
         console.dir("clickBackwardContinuous");
         let action = {
-            command: 1,
-            stopped: false,
-            direction: -1,
-            continuous: true,
-        }
-        // If there's already a continuous action in the queue don't add a duplicate.
-        //
+                command: 1,
+                stopped: false,
+                direction: -1,
+                continuous: true,
+            }
+            // If there's already a continuous action in the queue don't add a duplicate.
+            //
         if (compose.actions.length > 0) {
             let obj = compose.actions.shift();
             if (obj.command != action.command) {
@@ -144,6 +143,22 @@ class Compose {
         }
     }
 
+    speedSetting(item) {
+        //
+        // At slider value 1 the animation length is 10000ms
+        // at slider value 50 the length is 1000ms
+        // and at value 100 the length is 100ms
+        // So I use y = mx + c to start with the slider x value and
+        // calculate a y value between 2 and 4, and then calculate 10 ^ y
+        //
+        let m = 1 / 49.5;
+        let c = 4 + m;
+        let x = item.target.value;
+        let y = (-m * x) + c;
+        let ms = Math.pow(10, y);
+        compose.animationLength = ms;
+    }
+
     constructor() {
         this.actions = []; // queue the button clicks
         this.stopped = true;
@@ -161,6 +176,9 @@ class Compose {
         document.getElementById("stop").addEventListener("click", this.clickStop);
         document.getElementById("forward_once").addEventListener("click", this.clickForwardOnce);
         document.getElementById("forward_continuous").addEventListener("click", this.clickForwardContinuous);
+
+        document.getElementById("speed_slider").addEventListener("change", this.speedSetting);
+
 
         requestAnimationFrame(this.doAnimation.bind(this));
     }
