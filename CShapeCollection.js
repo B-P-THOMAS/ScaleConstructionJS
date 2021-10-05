@@ -36,9 +36,14 @@ class CShapeCollection {
         return `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
     }
 
-    update(time) {
+    update(time, direction) {
         let deltatime = time - this.lasttime;
         this.lasttime = time;
+
+        if (deltatime == 0 && direction != 0 && this.direction != direction) {
+            this.direction = direction;
+            this.advanceScene();
+        }
 
         // update the angles array.
         //

@@ -15,13 +15,38 @@ class Compose {
 
         if (this.stopped || this.startTime < 0) {
             this.startTime = timestamp;
-        } else {
+            if (this.actions.length > 0) {
+                let action = this.actions.shift();
+                if (action.direction != undefined) {
+                    this.direction = action.direction
+                }
+                if (action.stopped != undefined) {
+                    this.stopped = action.stopped;
+                }
+                // if (action.stopping != undefined) {
+                //     this.stopping = action.stopping;
+                // }
+                if (action.continuous != undefined) {
+                    this.stopping = !action.continuous;
+                }
+
+            }
+        }
+        else {
             progress = timestamp - this.startTime;
         }
 
         // time is in the range [0.0, 1.0]
         //
         let time = progress / this.animationLength;
+        // let direction = 0;
+
+        // if (this.starting) {
+        //     this.starting = false;
+        //     direction = this.direction;
+        //     time = 0;
+        // }
+
         time = Math.min(1, time);
         time = this.easeOutExpo(time);
 
@@ -52,42 +77,85 @@ class Compose {
 
     clickBackwardContinuous() {
         console.dir("clickBackwardContinuous");
-        compose.stopped = false;
-        compose.stopping = false;
-        compose.direction = -1;
+        let action = {
+            command: 1,
+            stopped: false,
+            // stopping: false,
+            direction: -1,
+            continuous: true,
+        }
+        // If there's already a continuous action in the queue don't add a duplicate.
+        //
+        if (compose.actions.length > 0) {
+            let obj = compose.actions.shift();
+            if (obj.command != action.command) {
+                compose.actions.push(obj);
+            }
+        }
+        compose.actions.push(action);
     }
 
     clickBackwardOnce() {
         console.dir("clickBackwardOnce");
-        compose.stopped = false;
-        compose.stopping = true;
-        compose.direction = -1;
+        let action = {
+            command: 2,
+            stopped: false,
+            // stopping: true,
+            direction: -1,
+            continuous: false,
+        }
+        compose.actions.push(action);
     }
 
     clickStop() {
         console.dir("clickStop");
+        // let action = {
+        //     // stopping: true
+        //     continuous: false,
+        // }
+        // compose.actions.push(action);
         compose.stopping = true;
     }
 
     clickForwardOnce() {
         console.dir("clickForwardOnce");
-        compose.stopped = false;
-        compose.stopping = true;
-        compose.direction = +1;
+        let action = {
+            command: 3,
+            stopped: false,
+            // stopping: true,
+            direction: +1,
+            continuous: false,
+        }
+        compose.actions.push(action);
     }
 
     clickForwardContinuous() {
         console.dir("clickForwardContinuous");
-        compose.stopped = false;
-        compose.stopping = false;
-        compose.direction = +1;
+        let action = {
+            command: 4,
+            stopped: false,
+            stopping: false,
+            direction: +1,
+            continuous: true,
+        }
+        // If there's already a continuous action in the queue don't add a duplicate.
+        //
+        if (compose.actions.length > 0) {
+            let obj = compose.actions.shift();
+            if (obj.command != action.command) {
+                compose.actions.push(obj);
+            }
+        }
+        compose.actions.push(action);
     }
 
     constructor() {
+        this.actions = [];
+        this.starting = false;
         this.stopped = true;
         this.stopping = false;
         this.startTime = -1;
-        this.animationLength = 2000; // Animation length in milliseconds
+        this.animationLength = 1000; // Animation length in milliseconds
         this.direction = -1; // +1 clockwise, -1 counterclockwise
 
         this.ctx = document.getElementById('canvas').getContext('2d');

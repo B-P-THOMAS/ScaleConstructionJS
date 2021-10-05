@@ -39,11 +39,16 @@ class Bezel {
         ctx.restore();
     }
 
-    update(time) {
+    update(time, direction) {
         let deltatime = time - this.lasttime;
         this.lasttime = time;
+
         this.angle += (this.direction * deltatime * 5 * Math.PI / 6);
         
+        if (time == 0 && direction != 0 && this.direction != direction) {
+            this.direction = direction;
+        }
+
         if (this.angle < 0) {
             this.angle += Math.PI * 2;
         }
