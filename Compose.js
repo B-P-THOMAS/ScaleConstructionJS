@@ -49,6 +49,7 @@ class Compose {
         this.ctx.clearRect(0, 0, w, h);
         this.shapes.renderPieWedges(this.ctx);
         this.bezel.render(this.ctx);
+        this.legends.render(this.ctx);
         this.shapes.renderSpokesAndBlobs(this.ctx);
         this.ctx.restore();
 
@@ -56,6 +57,7 @@ class Compose {
             this.startTime = timestamp;
             this.shapes.advanceScene();
             this.bezel.advanceScene();
+            this.legends.advanceScene();
             if (this.stopping) {
                 this.stopped = true;
             }
@@ -170,6 +172,7 @@ class Compose {
         this.ctx = document.getElementById('canvas').getContext('2d');
         this.bezel = new Bezel(this.ctx, this.direction);
         this.shapes = new CShapeCollection(this.ctx, this.bezel.radius, this.direction);
+        this.legends = new Legends(this.ctx, this.bezel.radius, this.direction);
 
         document.getElementById("backward_continuous").addEventListener("click", this.clickBackwardContinuous);
         document.getElementById("backward_once").addEventListener("click", this.clickBackwardOnce);
