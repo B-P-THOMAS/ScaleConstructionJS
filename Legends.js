@@ -4,6 +4,8 @@ class Legends {
     constructor(ctx, radius, direction) {
         this.degree = 0;
         this.spokelength = radius;
+        this.use_E_sharp = [false, false, false, false, false, false, true, false, false, false, false, true];
+        this.use_B_sharp = [false, false, false, false, false, false, false, false, false, false, false, true];
         this.use_sharps = [true, true, false, true, false, true, true, false, true, false, true, true];
         this.legends_sharps = ["C", "B", "A♯", "A", "G♯", "G", "F♯", "F", "E", "D♯", "D", "C♯"];
         this.legends_flats = ["C", "B", "B♭", "A", "A♭", "G", "G♭", "F", "E", "E♭", "D", "D♭"];
@@ -32,7 +34,14 @@ class Legends {
             let angle = (idx * Math.PI / 6) + (3 * Math.PI / 2);
             let x = ((width / 2) - Math.cos(angle) * (this.spokelength + 30));
             let y = ((height / 2) + Math.sin(angle) * (this.spokelength + 30));
-            ctx.fillText(legends[idx], x, y);
+            let str = legends[idx];
+            if (str == "F" && this.use_E_sharp[this.degree]) {
+                str = "E♯";
+            } else if (str == "C" && this.use_B_sharp[this.degree]) {
+                str = "B♯";
+            }
+
+            ctx.fillText(str, x, y);
             // ctx.beginPath();
             // ctx.arc(x, y, 4, 0, Math.PI * 2, true);
             // ctx.fill();
