@@ -44,6 +44,7 @@ class Compose {
         let h = this.ctx.canvas.height;
         this.shapes.update(time, this.direction);
         this.bezel.update(time, this.direction);
+        this.legends.update(time, this.direction);
 
         this.ctx.save();
         this.ctx.clearRect(0, 0, w, h);
