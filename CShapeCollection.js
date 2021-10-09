@@ -15,7 +15,8 @@ class CShapeCollection {
         this.lasttime = 0;
         this.radius = radius;
         this.fgColor = fgColor; // [r,g,b]
-        this.bgColor = [255, 255, 255];
+        this.bgColor = [0xff, 0xff, 0xff];
+        this.strokeColor = [0x32, 0x5F, 0xA2];
 
         let idx = 0;
         let angle = -Math.PI / 2;
@@ -85,7 +86,7 @@ class CShapeCollection {
         ctx.save();
 
         ctx.lineWidth = 5;
-        ctx.strokeStyle = '#325FA2';
+        ctx.strokeStyle = `rgb(${this.strokeColor.toString()})`;
         ctx.fillStyle = `rgb(${this.blobcolors[idx].toString()})`;
 
         ctx.translate(width / 2, height / 2);
