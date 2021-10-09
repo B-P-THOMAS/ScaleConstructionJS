@@ -1,6 +1,6 @@
 class CShapeCollection {
 
-    constructor(ctx, radius, direction, fgColor) {
+    constructor(ctx, radius, direction, fgColor, strokeColor) {
 
         // The numbers in the steps array represent the intervals in a 
         // one-octave major scale:        
@@ -16,7 +16,7 @@ class CShapeCollection {
         this.radius = radius;
         this.fgColor = fgColor; // [r,g,b]
         this.bgColor = [0xff, 0xff, 0xff];
-        this.strokeColor = [0x32, 0x5F, 0xA2];
+        this.strokeColor = strokeColor;
 
         let idx = 0;
         let angle = -Math.PI / 2;

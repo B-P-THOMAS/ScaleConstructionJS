@@ -1,10 +1,11 @@
 class Bezel {
-    constructor(ctx, direction, fgColor) {
+    constructor(ctx, direction, fgColor, strokeColor) {
         this.radius = ctx.canvas.width / 2.5
         this.angle = -Math.PI / 2;
         this.lasttime = 0;
         this.direction = direction; // +1 clockwise, -1 counterclockwise
         this.fgColor = fgColor; // array [r,g,b] e.g. [ 255, 100, 100 ]
+        this.strokeColor = strokeColor;
     }
 
     render(ctx) {
@@ -17,7 +18,7 @@ class Bezel {
 
         ctx.beginPath();
         ctx.lineWidth = 5;
-        ctx.strokeStyle = '#325FA2';
+        ctx.strokeStyle = `rgb(${this.strokeColor.toString()}`;
         ctx.fillStyle = ctx.strokeStyle;
         ctx.arc(0, 0, this.radius, 0, Math.PI * 2, true);
         ctx.stroke();
