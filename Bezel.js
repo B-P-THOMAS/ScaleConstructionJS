@@ -29,8 +29,8 @@ class Bezel {
         // Blob indicates root of new scale.
         //
         ctx.rotate(this.angle);
-        ctx.translate(this.radius, 0);
-        ctx.fillStyle = '#ff0000';
+        ctx.translate(this.radius + 30, 0);
+        ctx.fillStyle = '#ffa0a0';
 
         ctx.beginPath();
         ctx.arc(0, 0, 18, 0, Math.PI * 2, true);
@@ -44,7 +44,7 @@ class Bezel {
         this.lasttime = time;
 
         this.angle += (this.direction * deltatime * 5 * Math.PI / 6);
-        
+
         if (time == 0 && direction != 0 && this.direction != direction) {
             this.direction = direction;
         }
