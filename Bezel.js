@@ -1,9 +1,10 @@
 class Bezel {
-    constructor(ctx, direction) {
+    constructor(ctx, direction, fgColor) {
         this.radius = ctx.canvas.width / 2.5
         this.angle = -Math.PI / 2;
         this.lasttime = 0;
         this.direction = direction; // +1 clockwise, -1 counterclockwise
+        this.fgColor = fgColor; // array [r,g,b] e.g. [ 255, 100, 100 ]
     }
 
     render(ctx) {
@@ -30,7 +31,7 @@ class Bezel {
         //
         ctx.rotate(this.angle);
         ctx.translate(this.radius + 30, 0);
-        ctx.fillStyle = '#ffa0a0';
+        ctx.fillStyle = `rgb(${this.fgColor.toString()}`;
 
         ctx.beginPath();
         ctx.arc(0, 0, 18, 0, Math.PI * 2, true);

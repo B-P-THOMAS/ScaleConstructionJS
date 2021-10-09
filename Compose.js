@@ -163,6 +163,7 @@ class Compose {
     }
 
     constructor() {
+        let fgColor = [0x04, 0xCC, 0x7D];
         this.actions = []; // queue the button clicks
         this.stopped = true;
         this.stopping = false;
@@ -171,8 +172,8 @@ class Compose {
         this.direction = -1; // +1 clockwise, -1 counterclockwise
 
         this.ctx = document.getElementById('canvas').getContext('2d');
-        this.bezel = new Bezel(this.ctx, this.direction);
-        this.shapes = new CShapeCollection(this.ctx, this.bezel.radius, this.direction);
+        this.bezel = new Bezel(this.ctx, this.direction, fgColor);
+        this.shapes = new CShapeCollection(this.ctx, this.bezel.radius, this.direction, fgColor);
         this.legends = new Legends(this.ctx, this.bezel.radius, this.direction);
 
         document.getElementById("backward_continuous").addEventListener("click", this.clickBackwardContinuous);

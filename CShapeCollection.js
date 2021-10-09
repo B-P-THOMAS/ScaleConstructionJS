@@ -1,6 +1,6 @@
 class CShapeCollection {
 
-    constructor(ctx, radius, direction) {
+    constructor(ctx, radius, direction, fgColor) {
 
         // The numbers in the steps array represent the intervals in a 
         // one-octave major scale:        
@@ -14,15 +14,17 @@ class CShapeCollection {
         this.selector = (this.direction > 0) ? 6 : 3;
         this.lasttime = 0;
         this.radius = radius;
+        this.fgColor = fgColor; // [r,g,b]
+        this.bgColor = [255, 255, 255];
 
         let idx = 0;
         let angle = -Math.PI / 2;
         do {
-            let piesegmentcolor = 'rgb(255,0,0)'
+            let piesegmentcolor = this.fgColor;
             this.angles.push(angle);
-            this.blobcolors.push('rgb(255,255,255)');
+            this.blobcolors.push(this.bgColor);
             if (steps[idx] == 2) {
-                piesegmentcolor = 'rgb(255,255,255)';
+                piesegmentcolor = this.bgColor;
             }
             this.piesegmentcolors.push(piesegmentcolor);
             angle += steps[idx] * (Math.PI / 6);
@@ -33,7 +35,12 @@ class CShapeCollection {
         if (this.direction < 0) {
             time = 1 - time;
         }
-        return `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
+        let rval = this.fgColor[0] + time * (this.bgColor[0] - this.fgColor[0]);
+        let gval = this.fgColor[1] + time * (this.bgColor[1] - this.fgColor[1]);
+        let bval = this.fgColor[2] + time * (this.bgColor[2] - this.fgColor[2]);
+        // return `rgb(${rval},${gval},${bval})`;
+        return [rval, gval, bval];
+        // return `rgb(255,${Math.floor(255 * time)},${Math.floor(255 * time)})`;
     }
 
     update(time, direction) {
@@ -79,7 +86,7 @@ class CShapeCollection {
 
         ctx.lineWidth = 5;
         ctx.strokeStyle = '#325FA2';
-        ctx.fillStyle = this.blobcolors[idx];
+        ctx.fillStyle = `rgb(${this.blobcolors[idx].toString()})`;
 
         ctx.translate(width / 2, height / 2);
         ctx.rotate(angle);
@@ -109,7 +116,7 @@ class CShapeCollection {
             let height = ctx.canvas.height;
 
             ctx.save();
-            ctx.fillStyle = this.piesegmentcolors[idxstart];
+            ctx.fillStyle = `rgb(${this.piesegmentcolors[idxstart].toString()})`;
             ctx.translate(width / 2, height / 2);
             ctx.beginPath();
             ctx.moveTo(0, 0);
