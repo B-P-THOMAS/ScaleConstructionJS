@@ -23,7 +23,7 @@ class CShapeCollection {
         do {
             let piesegmentcolor = this.fgColor;
             this.angles.push(angle);
-            this.blobcolors.push(this.bgColor);
+            this.blobcolors.push(idx == 0 ? strokeColor : this.bgColor);
             if (steps[idx] == 2) {
                 piesegmentcolor = this.bgColor;
             }
