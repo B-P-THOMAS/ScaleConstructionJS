@@ -3,12 +3,14 @@
 class Legends {
     constructor(ctx, radius, direction) {
         this.degree = 0;
+        this.mode_index = 0;
         this.spokelength = radius;
         this.use_E_sharp = [false, false, false, false, false, false, true, false, false, false, false, true];
         this.use_B_sharp = [false, false, false, false, false, false, false, false, false, false, false, true];
         this.use_sharps = [true, true, false, true, false, true, true, false, true, false, true, true];
         this.legends_sharps = ["C", "B", "A♯", "A", "G♯", "G", "F♯", "F", "E", "D♯", "D", "C♯"];
         this.legends_flats = ["C", "B", "B♭", "A", "A♭", "G", "G♭", "F", "E", "E♭", "D", "D♭"];
+        this.mode_names = ["ionian", "dorian", "phrygian", "lydian", "mixolydian", "aolian", "lochrian"];
         this.direction = direction;
     }
 
@@ -47,6 +49,10 @@ class Legends {
             // ctx.fill();
         }
 
+        ctx.textBaseline = "top";
+        ctx.textAlign = "left";
+        ctx.fillText(this.mode_names[this.mode_index], 5, 5);
+
         ctx.restore();
     }
 
@@ -58,5 +64,9 @@ class Legends {
         this.degree -= (this.direction * 5);
         this.degree += 12;
         this.degree %= 12;
+
+        this.mode_index += (this.direction * 4);
+        this.mode_index += 7;
+        this.mode_index %= 7;
     }
 }
