@@ -12,6 +12,7 @@ class Legends {
         this.legends_flats = ["C", "B", "B♭", "A", "A♭", "G", "G♭", "F", "E", "E♭", "D", "D♭"];
         this.mode_names = ["ionian", "dorian", "phrygian", "lydian", "mixolydian", "aolian", "lochrian"];
         this.direction = direction;
+        this.textColor;
     }
 
     render(ctx) {
@@ -49,6 +50,8 @@ class Legends {
             // ctx.fill();
         }
 
+        // console.log(this.textColor);
+        ctx.fillStyle = this.textColor;
         ctx.textBaseline = "top";
         ctx.textAlign = "left";
         ctx.fillText(this.mode_names[this.mode_index], 5, 5);
@@ -58,6 +61,7 @@ class Legends {
 
     update(time, direction) {
         this.direction = direction;
+        this.textColor = `rgba(0,0,0,${1 - time})`;
     }
 
     advanceScene() {
